@@ -1,0 +1,48 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main, release] # main ➜ staging, release ➜ prod
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read # checkout
+      id-token: write # if you later switch to OIDC
+      # no more than needed
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Decide which env we’re on
+      - name: Set env name
+        id: setenv
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            echo "env_name=staging"       >> $GITHUB_OUTPUT
+            echo "cf_token=${{ secrets.CF_TOKEN_STAGING }}" >> $GITHUB_OUTPUT
+          else
+            echo "env_name=production"    >> $GITHUB_OUTPUT
+            echo "cf_token=${{ secrets.CF_TOKEN_PROD }}"    >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build for Cloudflare
+        run: npx opennextjs-cloudflare build --env ${{ steps.setenv.outputs.env_name }}
+
+      - name: Deploy with Wrangler
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ github.ref == 'refs/heads/main'
+            && secrets.CF_TOKEN_STAGING
+            || secrets.CF_TOKEN_PROD }}
+        run: npx wrangler deploy --env ${{ github.ref == 'refs/heads/main'
+          && 'staging'
+          || 'production' }}
