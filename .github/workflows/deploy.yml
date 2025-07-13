@@ -3,6 +3,8 @@ name: Deploy to Cloudflare
 on:
   push:
     branches: [main, release] # main ➜ staging, release ➜ prod
+  pull_request:
+    branches: [main, release]
 
 jobs:
   build-and-deploy:
@@ -27,7 +29,9 @@ jobs:
       - name: Set env name
         id: setenv
         run: |
-          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+          BRANCH="${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}"
+
+          if [[ "$BRANCH" == "main" ]]; then
             echo "env_name=staging"       >> $GITHUB_OUTPUT
             echo "cf_token=${{ secrets.CF_TOKEN_STAGING }}" >> $GITHUB_OUTPUT
           else
