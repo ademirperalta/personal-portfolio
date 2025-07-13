@@ -1,0 +1,7 @@
+# Ignore things we don’t want copied into the image
+node_modules
+.next
+.open-next
+.git
+.DS_Store
+wrangler-*.log
