@@ -1,5 +1,6 @@
 name = "personal-portfolio"
 main = ".open-next/worker.js"
+account_id = "40f0474c063126e0c7bae8da9895194c"
 compatibility_date = "2025-03-25"
 compatibility_flags = ["nodejs_compat"]
 

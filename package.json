@@ -7,8 +7,6 @@
     "lint": "next lint",
     "build": "next build",
     "start": "next start",
-    "deploy:stg": "CLOUDFLARE_API_TOKEN=$CF_TOKEN_STAGING  npx opennextjs-cloudflare build --env staging     && npx wrangler deploy --env staging",
-    "deploy:prod": "CLOUDFLARE_API_TOKEN=$CF_TOKEN_PROD   npx opennextjs-cloudflare build --env production  && npx wrangler deploy --env production",
     "docker:dev": "docker compose up",
     "docker:build": "docker build -t ademir/portfolio .",
     "docker:run": "docker run -p 3000:3000 ademir/portfolio"
