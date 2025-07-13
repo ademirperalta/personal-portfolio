@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      target: dev # still build the dev stage
+    command: npm run dev # ← run Next in dev mode
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app # hot-reload your code
+      - /app/node_modules # keep container deps
+    environment:
+      - NODE_ENV=development
