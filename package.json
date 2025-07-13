@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "preview": "opennextjs-cloudflare build --env staging && opennextjs-cloudflare preview --env staging",
+    "deploy": "opennextjs-cloudflare build --env staging && opennextjs-cloudflare deploy --env staging",
+    "deploy:prod": "opennextjs-cloudflare build --env production && opennextjs-cloudflare deploy --env production",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

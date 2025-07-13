@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Ademir Peralta",
-  description: "Personal website of Ademir Peralta",
+  description: "Ademir's Personal Portfolio",
   icons: {
     icon: [
       // default favicon(s)

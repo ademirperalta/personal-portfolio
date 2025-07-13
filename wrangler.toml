@@ -1,9 +1,15 @@
-name               = "personal-portfolio"
-main               = ".open-next/worker.js"
-
+name = "personal-portfolio"
+main = ".open-next/worker.js"
 compatibility_date = "2025-03-25"
 compatibility_flags = ["nodejs_compat"]
 
 [assets]
 directory = ".open-next/assets"
 binding    = "ASSETS"
+
+# default = staging
+[env.staging]
+routes = ["staging.ademirperalta.com/*"]
+
+[env.production]
+routes = ["ademirperalta.com/*"]
